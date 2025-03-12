@@ -52,38 +52,42 @@
                                         </xs:element>
 
                                         <!-- Optional Narrative Section -->
-                                        <xs:element name="Narrative" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="Narratives" minOccurs="0">
                                             <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="NarrativeText" type="xs:string" />
-                                                    <xs:element name="NarrativeAuthor">
-                                                        <xs:simpleType>
-                                                            <xs:restriction base="xs:string">
-                                                                <xs:enumeration value="No Data"/>
-                                                                <xs:enumeration value="Nurse"/>
-                                                                <xs:enumeration value="Physician"/>
-                                                                <xs:enumeration value="Therapist"/>
-                                                            </xs:restriction>
-                                                        </xs:simpleType>
-                                                    </xs:element>
-                                                    <xs:element name="NarrativeType">
-                                                        <xs:simpleType>
-                                                            <xs:restriction base="xs:string">
-                                                                <xs:enumeration value="Other"/>
-                                                                <xs:enumeration value="ED Provider Note"/>
-                                                                <xs:enumeration value="Nursing Note"/>
-                                                                <xs:enumeration value="Therapy Note"/>
-                                                            </xs:restriction>
-                                                        </xs:simpleType>
-                                                    </xs:element>
+                                                <xs:sequence>                                        
+                                                    <xs:element name="Narrative" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="NarrativeText" type="xs:string" />
+                                                                <xs:element name="NarrativeAuthor">
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="xs:string">
+                                                                            <xs:enumeration value="No Data"/>
+                                                                            <xs:enumeration value="Nurse"/>
+                                                                            <xs:enumeration value="Physician"/>
+                                                                            <xs:enumeration value="Therapist"/>
+                                                                        </xs:restriction>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                                <xs:element name="NarrativeType">
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="xs:string">
+                                                                            <xs:enumeration value="Other"/>
+                                                                            <xs:enumeration value="ED Provider Note"/>
+                                                                            <xs:enumeration value="Nursing Note"/>
+                                                                            <xs:enumeration value="Therapy Note"/>
+                                                                        </xs:restriction>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>                                                        
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -93,8 +97,9 @@
             <xs:attribute name="SchemaVersion" type="xs:string" use="required"/>
             <xs:attribute name="SubmissionYYYYMM">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:pattern value="\d{4}(0[1-9]|1[0-2])"/> <!-- YYYYMM format -->
+                    <xs:restriction base="xs:int">                        
+                        <!-- Minimum value allowed -->
+                        <xs:minInclusive value="201401"/> 
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

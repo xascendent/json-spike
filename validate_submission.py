@@ -1,8 +1,9 @@
 import os
+import zipfile
 from lxml import etree
 
 XSDPATH = os.path.join(os.path.dirname(__file__), 'xsd')
-LANDINGPATH = os.path.join(os.path.dirname(__file__), 'landing')
+LANDINGPATH = os.path.join(os.path.dirname(__file__), 'landing', 'submissions')
 
 def validate():
     # Load XSD schema
@@ -11,7 +12,7 @@ def validate():
         xsd = etree.XMLSchema(etree.parse(f))
 
     # Load XML file
-    xml_file = os.path.join(LANDINGPATH, 'submissions.xml')
+    xml_file = os.path.join(LANDINGPATH, 'ghost.xml')
     with open(xml_file, 'rb') as f:
         xml = etree.parse(f)
 

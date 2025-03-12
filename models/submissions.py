@@ -1,11 +1,11 @@
 from sqlalchemy import Column, Integer, String, Date, Time, Float, LargeBinary, DateTime
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from db.context import SubmssionsContext
+from db.context import SubmssionsBase
 
 
-class EdVisit(SubmssionsContext):
-    __tablename__ = 'edvisit'
+class Submissions(SubmssionsBase):
+    __tablename__ = 'submissions'
     
     # Binary fields for SHA256 identifiers
     patient_identifier = Column(LargeBinary(32), primary_key=True)
