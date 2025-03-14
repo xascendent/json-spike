@@ -1,15 +1,25 @@
-from db.base import engine, Base
-from models.edvisit import EdVisit
+from database import reset_demo_sql
+from pipeline_utils import reset_files
+from processes import intake
 
-def init_db():
-    # Create the database and tables if they don’t exist
-    print("Initializing database...")
-    Base.metadata.create_all(bind=engine)
-    print("Database and tables created (if not existing).")
+def process_loop():
+    print("Processing loop...")
+    intake.process_submissions()
+    print("Processing loop complete!")
+
+def reset_demo_project():
+    print("Resetting the demo system...")
+    reset_demo_sql.reset_demo_staging_sql()
+    reset_demo_sql.reset_demo_submission_sql()
+    reset_files.reset_quarantine()
+    reset_files.reset_archive()
+    print("Demo system reset!")
 
 def main():
     print("Hello from json-spike!")
-    init_db()
+    reset_demo_project()
+    process_loop()
+
 
 if __name__ == "__main__":
     main()

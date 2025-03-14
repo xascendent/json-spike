@@ -2,10 +2,10 @@ from sqlalchemy import Column, Integer, String, Date, Time, Float, LargeBinary, 
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from db.context import SubmssionsBase
+from database.context import SubmssionsBase
 
 
-class Submission(SubmssionsContext):
+class Submissions(SubmssionsContext):
     __tablename__ = 'submissions'   
     
     submission_id = Column(BigInteger, primary_key=True, autoincrement=True, primary_key=True)

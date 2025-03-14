@@ -108,7 +108,7 @@
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="ghost"/>
                         <xs:enumeration value="qbert"/>
-                        <xs:enumeration value="imagine"/>
+                        <xs:enumeration value="dirk"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

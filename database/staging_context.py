@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-SUBMISSIONSSTAGINGDB_URL = os.getenv("SUBMISSIONSSTAGINGDB_URL")
-engine = create_engine(SUBMISSIONSSTAGINGDB_URL, echo=True)
+STAGING_DATABASE_URL = os.getenv("STAGING_DATABASE_URL")
+engine = create_engine(STAGING_DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine)
-SubmssionsContext = declarative_base()
+StagingContext = declarative_base()
