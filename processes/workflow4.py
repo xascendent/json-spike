@@ -1,20 +1,10 @@
 from database.deid_eng import pull_random_subset, pull_narratives, visits_to_deid, narratives_to_deid
+from database.med_eng import pull_stg_hashed_medication_list, get_grp_non_matched_hashed_medications
 
 
 def run_workflow4(submission_id):
     run_deid_workflow(submission_id)
-    # Make Flyway databases
-
-    # LLM 1
-    # 1- We will pull the medication data from the staging area and hash the value... maybe we do this on the insert.. SQL CHnages
-    # 2- We will check the hash against a Grouper table to see if we have already seen this medication before
-    # 3- If we havnen't seen this medication before we will run it against a LLM model to normalize it and flag it in the db as a new medication, we will want to add opiod and NHSA flags to the medication
-    # 4- We will want to pull the RXNorm code 
-    # 5- we will want to update the medication table with the finds.  Otherwsie we do nothing since we have already grouped this medication
-
-
-    # LLM 2
-    # 1- we will want to take a 5% sample of the narritive data and run it against a LLM model to see if we can flag any phi/pii and push the 5% to a new table for review
+    run_med_workflow(submission_id)
 
     
 def run_deid_workflow(submission_id):
@@ -23,3 +13,10 @@ def run_deid_workflow(submission_id):
     visits_to_deid(visit_data)
     narratives_to_deid(narratives_data)
     print("De-identification workflow complete") 
+
+def run_med_workflow(submission_id):
+    staging_med_data = pull_stg_hashed_medication_list(submission_id)
+    meds_to_be_grouped = get_grp_non_matched_hashed_medications(staging_med_data)
+    print(f"Non-matched medications:")
+    for hash_val, med_name in meds_to_be_grouped:
+        print(f"Hash: {hash_val}, Medication: {med_name}")

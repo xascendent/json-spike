@@ -14,6 +14,7 @@ def reset_demo_project():
     reset_demo_sql.reset_demo_submission_sql()
     reset_demo_sql.reset_demo_deid_sql()
     reset_demo_sql.reset_demo_warehouse_sql()
+    reset_demo_sql.reset_demo_grouping_sql()
 
     reset_files.reset_quarantine()
     reset_files.reset_archive()
