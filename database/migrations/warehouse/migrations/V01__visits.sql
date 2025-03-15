@@ -9,5 +9,5 @@ CREATE TABLE visits (
     sex VARCHAR(10) NOT NULL,
     ed_door_date DATE NOT NULL,
     ed_door_time TIME NOT NULL,
-    load_date DATETIMEOFFSET(7) DEFAULT ((CONVERT([datetimeoffset],sysutcdatetime(),(126)) AT TIME ZONE 'Mountain Standard Time'))  
+    load_date DATETIMEOFFSET(7)
 );

@@ -10,6 +10,6 @@ load_dotenv()
 SUBMISSION_DATABASE_URL = os.getenv("SUBMISSION_DATABASE_URL")
 engine = create_engine(SUBMISSION_DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine)
-StagingContext = declarative_base()
+SubmissionContext = declarative_base()
 
 

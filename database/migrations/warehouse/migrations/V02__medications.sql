@@ -5,9 +5,9 @@ CREATE TABLE medications (
     submissionYYYYMM INT NOT NULL,
     submission_id BIGINT NULL,
     hash_medication_name BINARY(32) NULL,
-    medication_name NVARCHAR(MAX) NOT NULL,
+    medication_name NVARCHAR(MAX) NOT NULL,    
     order_entry_date DATE NOT NULL,
     order_entry_time TIME NOT NULL,
     medication_route NVARCHAR(MAX) NOT NULL,    
-    load_date DATETIMEOFFSET(7) DEFAULT ((CONVERT([datetimeoffset],sysutcdatetime(),(126)) AT TIME ZONE 'Mountain Standard Time'))  
+    load_date DATETIMEOFFSET(7)   
 );

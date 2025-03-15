@@ -1,8 +1,8 @@
 from lxml import etree
-from database.staging_context import SessionLocal
-from database.models.submissions import Visits, Medications, Narratives
+from database.context_staging import SessionLocal
+from database.models.staging import Visits, Medications, Narratives
 from datetime import datetime
-from pipeline_utils.hashing import generate_unique_visit_id
+from pipeline_utils.hashing import generate_unique_visit_id, generate_medication_hash
 
 def load_xsd_into_memory(xsd_file)->etree.XMLSchema:
     # Load schema into memory.  Everything is passed by reference.
@@ -24,7 +24,7 @@ def validate_submission(xsd, xml_file)->bool:
             print(f"Line {error.line}, Col {error.column}: {error.message}")
     return False
 
-def stage_submission(xml_file):
+def stage_submission(xml_file, submission_id):
     with open(xml_file, 'rb') as f:
         tree = etree.parse(f)
     
@@ -53,6 +53,7 @@ def stage_submission(xml_file):
                 ed_visit_id=ed_visit_id,
                 submissionYYYYMM=submission_yyyymm,
                 site_name=site_name,
+                submission_id=submission_id,
                 birth_date=birth_date,
                 sex=sex,
                 ed_door_date=ed_door_date,
@@ -62,6 +63,7 @@ def stage_submission(xml_file):
             # Handle Medications
             medications = patient_data.findall('.//Medication')
             for med in medications:
+                hash_medication_name = generate_medication_hash(med.find('MedName').text)
                 med_name = med.find('MedName').text
                 order_entry_date = datetime.strptime(med.find('OrderEntryDate').text, '%Y-%m-%d').date()
                 order_entry_time = datetime.strptime(med.find('OrderEntryTime').text, '%H:%M:%S').time()
@@ -71,10 +73,12 @@ def stage_submission(xml_file):
                     visit_id_lnk=visit_id_lnk,
                     site_name=site_name,
                     submissionYYYYMM=submission_yyyymm,
+                    hash_medication_name=hash_medication_name,
                     medication_name=med_name,
                     order_entry_date=order_entry_date,
                     order_entry_time=order_entry_time,
-                    medication_route=med_route
+                    medication_route=med_route,
+                    submission_id=submission_id
                 )
                 visit.medications.append(medication)
 
@@ -91,7 +95,8 @@ def stage_submission(xml_file):
                     submissionYYYYMM=submission_yyyymm,
                     narrative_text=narrative_text,
                     narrative_author=narrative_author,
-                    narrative_type=narrative_type
+                    narrative_type=narrative_type,
+                    submission_id=submission_id
                 )
                 visit.narratives.append(narrative_obj)
 

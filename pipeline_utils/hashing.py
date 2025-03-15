@@ -12,3 +12,7 @@ def generate_unique_visit_id(ed_mrn, ed_visit_id, submissionYYYYMM, site_name):
     # Combine all fields into a single string and hash it
     combined_value = f"{mrn_hex}-{visit_hex}-{submissionYYYYMM}-{site_name}"
     return generate_hash(combined_value)
+
+
+def generate_medication_hash(medication_name: str):
+    return generate_hash(medication_name)
