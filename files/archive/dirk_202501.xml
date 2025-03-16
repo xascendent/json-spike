@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Submissions SchemaVersion="1.0" SubmissionYYYYMM="202501" Site="dirk">
+    <Submission>
+        <PatientData>
+            <EdVisitId>9e253f232c515d847f90bb6e14ae4af80cfa19157915d991863e19a3b456e4b4</EdVisitId>
+            <EdMrn>188b1ae5cbb7b72d40cf1d90781fd0aa04bd547f1640447c31fd2fa9dc8f74eb</EdMrn>
+            <BirthDate>1985-07-15</BirthDate>
+            <Sex>F</Sex>
+            <EDDoorDate>2024-03-01</EDDoorDate>
+            <EDDoorTime>14:32:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Lisinopril</MedName>
+                    <OrderEntryDate>2024-03-01</OrderEntryDate>
+                    <OrderEntryTime>15:10:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+                <Medication>
+                    <MedName>Ibuprofen</MedName>
+                    <OrderEntryDate>2024-03-01</OrderEntryDate>
+                    <OrderEntryTime>15:15:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>Patient Sarah Johnson (DOB: 07/15/1985) presented with complaints of chest pain and shortness of breath. She states that she has been experiencing these symptoms for the past 3 days. Patient lives at 425 Oak Street, Apt 3B, San Francisco, CA 94110. Contact number: 415-555-7890. Patient is allergic to penicillin.</NarrativeText>
+                    <NarrativeAuthor>Physician</NarrativeAuthor>
+                    <NarrativeType>ED Provider Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>
+    <Submission>
+        <PatientData>
+            <EdVisitId>556d87be5bfaf31a4a66826c4bb6a611e8e6d12dbfa7326e33bb4019d7a53b23</EdVisitId>
+            <EdMrn>49dbd17a1d751ae20f315a90f662b9f6f3af65339c4cca5b9482c35abe9bbc94</EdMrn>
+            <BirthDate>1995-03-22</BirthDate>
+            <Sex>M</Sex>
+            <EDDoorDate>2024-03-05</EDDoorDate>
+            <EDDoorTime>08:45:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Albuterol</MedName>
+                    <OrderEntryDate>2024-03-05</OrderEntryDate>
+                    <OrderEntryTime>09:20:00</OrderEntryTime>
+                    <MedRoute>INH</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>Michael Williams (SSN: 123-45-6789) came in with severe asthma attack. Patient reports using his emergency inhaler 3 times in the last hour with minimal relief. Emergency contact: Jane Williams (mother) at 510-555-3456. Patient's email: michael.williams@email.com. Employer: Acme Corporation.</NarrativeText>
+                    <NarrativeAuthor>Nurse</NarrativeAuthor>
+                    <NarrativeType>Nursing Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>
+    <Submission>
+        <PatientData>
+            <EdVisitId>935e0a8e7a2584f4236f3304a1ccbbf34855d902c8684ba7988432bdd169a781</EdVisitId>
+            <EdMrn>4cf6943e5b19d4cd22accb3cafaa45e1fb7179a8b8aa02242672ce28666b0393</EdMrn>
+            <BirthDate>1968-11-04</BirthDate>
+            <Sex>F</Sex>
+            <EDDoorDate>2024-03-10</EDDoorDate>
+            <EDDoorTime>21:15:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Morphine</MedName>
+                    <OrderEntryDate>2024-03-10</OrderEntryDate>
+                    <OrderEntryTime>21:45:00</OrderEntryTime>
+                    <MedRoute>IV</MedRoute>
+                </Medication>
+                <Medication>
+                    <MedName>Ondansetron</MedName>
+                    <OrderEntryDate>2024-03-10</OrderEntryDate>
+                    <OrderEntryTime>22:00:00</OrderEntryTime>
+                    <MedRoute>IV</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>Dr. Smith consulted with patient Elizabeth Chen regarding her abdominal pain. Patient has Medicare number 1EG4-TE5-MK72 and reports recent travel to Mexico. Elizabeth's driver's license #C5674321 from California. Lives with husband Robert Chen at 789 Maple Drive, Oakland, CA 94608. Phone: 510-555-9876.</NarrativeText>
+                    <NarrativeAuthor>Physician</NarrativeAuthor>
+                    <NarrativeType>ED Provider Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>
+    <Submission>
+        <PatientData>
+            <EdVisitId>1c9bfda050739df02e9183f0ffa8535dac7887fd192d10db1d9a17c6d46c7dee</EdVisitId>
+            <EdMrn>6a5f3b7b8d81e4b9fd9017d2878cd5c52714a39e2bc26254e89396bfbf4c937f</EdMrn>
+            <BirthDate>2015-08-19</BirthDate>
+            <Sex>M</Sex>
+            <EDDoorDate>2024-03-12</EDDoorDate>
+            <EDDoorTime>15:30:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Amoxicillin</MedName>
+                    <OrderEntryDate>2024-03-12</OrderEntryDate>
+                    <OrderEntryTime>16:15:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>8-year-old Jason Garcia brought in by parents Carlos and Maria Garcia (phone: 415-555-2345) with fever and ear pain. Patient attends Lincoln Elementary School. Home address: 567 Pine Street, San Francisco, CA 94109. Insurance through father's employer (Kaiser, group #K9873212). Child has history of recurrent ear infections, last treated January 2024.</NarrativeText>
+                    <NarrativeAuthor>Nurse</NarrativeAuthor>
+                    <NarrativeType>Nursing Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>   
+</Submissions>

@@ -30,6 +30,9 @@ class Narratives(SubmissionContext):
     site_name = Column(String(100), nullable=False)
     submissionYYYYMM = Column(Integer, nullable=False)
     narrative_text = Column(String, nullable=False)
+    hash_narrative_text = Column(LargeBinary(32), nullable=False)
+    human_findings = Column(String, nullable=True)
+    llm_findings = Column(String, nullable=True)
     load_date = Column(DateTime(timezone=True), server_default=func.sysdatetimeoffset())
 
     # Back reference to VisitsCheck

@@ -3,6 +3,7 @@ from database.context_deid import SessionLocal as deid_session
 from database.context_staging import SessionLocal as staging_session
 from database.models.deid import VisitsCheck, Narratives
 from database.models.staging import Narratives as StagingNarratives
+from pipeline_utils.hashing import generate_narrative_hash
 
 def pull_random_subset(submission_id):
     query = text("""        
@@ -82,6 +83,7 @@ def narratives_to_deid(narratives_data):
                     visit_id_lnk=row['visit_id_lnk'],
                     site_name=row['site_name'],
                     submissionYYYYMM=row['submissionYYYYMM'],
+                    hash_narrative_text=generate_narrative_hash(row['narrative_text']),
                     narrative_text=row['narrative_text'],     
                     load_date=row['load_date']
                 )
@@ -92,6 +94,81 @@ def narratives_to_deid(narratives_data):
     except Exception as e:
         print(f"Error during narratives_to_deid: {e}")
         # Create a new session to rollback since the original session is out of scope
+        with deid_session() as session:
+            session.rollback()
+
+
+def add_narratives_to_deid_db(list_of_narratives):
+    try:
+        with deid_session() as session:
+            session.add_all(list_of_narratives)  
+            session.commit()
+
+    except Exception as e:
+        print(f"Error during narratives_to_deid: {repr(e)}")
+        # Create a new session to rollback since the original session is out of scope
+        with deid_session() as session:
+            session.rollback()
+
+
+def narratives_to_deid_return_list(narratives_data):    
+    narratives_data_list = []        
+    
+    # Create the list of ORM objects first
+    for row in narratives_data:                            
+        deid_narrative = Narratives(
+            visit_id_lnk=row['visit_id_lnk'],
+            site_name=row['site_name'],
+            submissionYYYYMM=row['submissionYYYYMM'],
+            hash_narrative_text=generate_narrative_hash(row['narrative_text']),
+            narrative_text=row['narrative_text'],
+            human_findings=None,  
+            llm_findings=None,    
+            load_date=row['load_date']
+        )
+        narratives_data_list.append(deid_narrative)
+    
+    # Create a dictionary list from the ORM objects BEFORE adding to database
+    result_list = [
+        {
+            "visit_id_lnk": narrative.visit_id_lnk,
+            "site_name": narrative.site_name,
+            "submissionYYYYMM": narrative.submissionYYYYMM,
+            "hash_narrative_text": narrative.hash_narrative_text,
+            "narrative_text": narrative.narrative_text,
+            "human_findings": narrative.human_findings,
+            "llm_findings": narrative.llm_findings,
+            "load_date": narrative.load_date
+        }
+        for narrative in narratives_data_list
+    ]
+    
+    # Now add to database
+    add_narratives_to_deid_db(narratives_data_list)
+    
+    # Return the dictionary list we prepared earlier
+    return result_list
+    
+
+        
+
+
+
+def add_llm_findings(visit_id_lnk, narrative_hash, llm_findings):
+    try:
+        with deid_session() as session:            
+            narrative = session.query(Narratives).filter(
+                Narratives.hash_narrative_text == narrative_hash,  # Use comma for AND in SQLAlchemy
+                Narratives.visit_id_lnk == visit_id_lnk
+            ).first()
+            
+            if narrative:  # Make sure we found a matching record
+                narrative.llm_findings = llm_findings
+                session.commit()
+            else:
+                print(f"No matching narrative found for hash {narrative_hash} and visit_id {visit_id_lnk}")
+    except Exception as e:
+        print(f"Error during add_llm_findings: {e}")
         with deid_session() as session:
             session.rollback()
 

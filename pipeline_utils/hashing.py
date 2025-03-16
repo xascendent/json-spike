@@ -16,3 +16,6 @@ def generate_unique_visit_id(ed_mrn, ed_visit_id, submissionYYYYMM, site_name):
 
 def generate_medication_hash(medication_name: str):
     return generate_hash(medication_name)
+
+def generate_narrative_hash(narrative_text: str):
+    return generate_hash(narrative_text)

@@ -26,6 +26,7 @@ def reset_submissions():
     create_submission("ghost_202303.xml", ".\\files\\landing\\ghost\\")
     create_submission("ghost_202304.xml", ".\\files\\landing\\ghost\\")
     create_submission("claw.xml", ".\\files\\landing\\dirk\\")
+    create_submission("dirk_202501.xml", ".\\files\\landing\\dirk\\")
     create_submission("qbert_202401.xml", ".\\files\\landing\\qbert\\")
 
 

@@ -10,17 +10,17 @@ from processes.workflow2 import run_workflow2
 from processes.workflow3 import run_workflow3
 from processes.workflow4 import run_workflow4
 from processes.workflow5 import run_workflow5
-
-import time # used to simulate processing time
+from pipeline_utils.sleep_pipeline import sleep_process
+#import time # used to simulate processing time
 
 XSD_PATH = os.getenv("XSD_PATH")
 XSD_SCHEMA = xml_pipeline.load_xsd_into_memory(XSD_PATH) 
 XML_FILES_PATH = os.getenv("LANDING_PATH")
 
-def sleep_process():
-    print("🛌 Sleeping...")
-    time.sleep(1) # Simulate processing time
-    print("🍭 Waking up...")
+# def sleep_process():
+#     print("🛌 Sleeping...")
+#     time.sleep(1) # Simulate processing time
+#     print("🍭 Waking up...")
 
 
 def fail_workflow(submission_id):
