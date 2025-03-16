@@ -1,4 +1,4 @@
-from database.submissions_interface import submission_id_from_file_name, update_submission_status
+from database.submissions_eng import submission_id_from_file_name, update_submission_status
 from database.enums import SubmissionStatus
 from pipeline_utils import xml_pipeline
 

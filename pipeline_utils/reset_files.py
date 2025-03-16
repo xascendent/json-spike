@@ -13,7 +13,24 @@ def reset_archive():
     print("Resetting archive...")
     original_directory = os.getenv("LANDING_PATH")
     source_directory = os.getenv("ARCHIVE_PATH")
-    reset_files(source_directory, original_directory)        
+    reset_files(source_directory, original_directory)  
+
+import os
+import shutil
+
+def reset_claw_submission():
+    try:
+        # move claw submission back to landing
+        print("Resetting claw submission...")
+        source_directory = os.getenv("QUARANTINE_PATH")
+        original_directory = os.path.join("./files/landing/dirk/claw.xml")
+        source_directory = os.path.join(source_directory, "claw.xml")
+        shutil.move(source_directory, original_directory)
+    except Exception as e:
+        pass  # No action needed, just swallow the exception
+
+
+    
 
 
 def reset_files(source_directory, original_directory):    

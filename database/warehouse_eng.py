@@ -3,6 +3,7 @@ from database.context_staging import SessionLocal as staging_session
 from database.context_warehouse import SessionLocal as warehouse_session
 from database.models.staging import Visits as StagingVisit, Medications as StagingMedication, Narratives as StagingNarrative
 from database.models.warehouse import Visits as WarehouseVisit, Medications as WarehouseMedication, Narratives as WarehouseNarrative
+from sqlalchemy import text
 
 def staging_to_warehouse(submission_id):
     try:
@@ -79,3 +80,24 @@ def staging_to_warehouse(submission_id):
     except Exception as e:
         print(f"Error during ETL transfer: {e}")
         wh_session.rollback()
+
+
+def remove_previous_site_yyyymm_from_warehouse(site_name, submission_yyyymm):
+    with warehouse_session() as session:
+        # Use parameterized queries to prevent injection
+        session.execute(
+            text("DELETE FROM dbo.medications WHERE site_name = :site_name AND submissionYYYYMM = :submissionYYYYMM"),
+            {"site_name": site_name, "submissionYYYYMM": submission_yyyymm}            
+        )
+        session.execute(
+            text("DELETE FROM dbo.narratives WHERE site_name = :site_name AND submissionYYYYMM = :submissionYYYYMM"),
+            {"site_name": site_name, "submissionYYYYMM": submission_yyyymm}            
+        )
+        session.execute(
+            text("DELETE FROM dbo.visits WHERE site_name = :site_name AND submissionYYYYMM = :submissionYYYYMM"),
+            {"site_name": site_name, "submissionYYYYMM": submission_yyyymm}            
+        )
+        
+        # Commit once after all statements
+        session.commit()
+        print(f"Warehouse cleaned for {site_name} by {submission_yyyymm}")

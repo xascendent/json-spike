@@ -5,6 +5,27 @@ from database.context_warehouse import SessionLocal as warehouse_session
 from database.context_grouping import SessionLocal as grouping_session
 from sqlalchemy import text
 
+def remove_submission_from_staging(submission_id):
+    with staging_session() as session:
+        # Use parameterized queries to prevent injection
+        session.execute(
+            text("DELETE FROM dbo.medications WHERE submission_id = :submission_id"),
+            {"submission_id": submission_id}
+        )
+        session.execute(
+            text("DELETE FROM dbo.narratives WHERE submission_id = :submission_id"),
+            {"submission_id": submission_id}
+        )
+        session.execute(
+            text("DELETE FROM dbo.visits WHERE submission_id = :submission_id"),
+            {"submission_id": submission_id}
+        )
+        
+        # Commit once after all statements
+        session.commit()
+        print(f"Submission {submission_id} removed from staging!")
+
+
 def reset_demo_staging_sql():
     with staging_session() as session:
         # Execute multiple statements

@@ -1,6 +1,6 @@
 from database.staging_rule_eng import check_visits_for_dups
 from database.enums import SubmissionStatus
-from database.submissions_interface import update_submission_status
+from database.submissions_eng import update_submission_status
 
 
 def run_workflow2(submission_id):

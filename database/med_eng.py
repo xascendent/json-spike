@@ -1,16 +1,17 @@
 from database.context_grouping import SessionLocal as grouping_session
 from database.context_staging import SessionLocal as staging_session
-from database.models.grouping import Medications
+from database.models.grouping import Medications as GroupingMedications
+from database.models.staging import Medications as StagingMedications
 
 
 def pull_stg_hashed_medication_list(submission_id) -> list:
     with staging_session() as session:
         hashes = (
             session.query(
-                Medications.hash_medication_name,
-                Medications.medication_name
+                StagingMedications.hash_medication_name,
+                StagingMedications.medication_name
             )
-            .filter(Medications.submission_id == submission_id)
+            .filter(StagingMedications.submission_id == submission_id)
             .distinct()
             .all()
         )
@@ -29,8 +30,8 @@ def get_grp_non_matched_hashed_medications(staging_data: list) -> list:
     with grouping_session() as session:
         # Step 1: Pull matched hashes from the grouping table
         matched_hashes = (
-            session.query(Medications.hash_medication_name)
-            .filter(Medications.hash_medication_name.in_(staging_hashes))
+            session.query(GroupingMedications.hash_medication_name)
+            .filter(GroupingMedications.hash_medication_name.in_(staging_hashes))
             .distinct()
             .all()
         )

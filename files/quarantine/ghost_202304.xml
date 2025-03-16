@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Submissions SchemaVersion="1.0" SubmissionYYYYMM="202304" Site="ghost">
+    <Submission>
+        <PatientData>
+            <EdVisitId>5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5</EdVisitId>
+            <EdMrn>e2217d3e4e120c6a3372a1890f03e232b35ad659d71f7a62501a4ee204a3e66d</EdMrn>
+            <BirthDate>1985-06-15</BirthDate>
+            <Sex>M</Sex>
+            <EDDoorDate>2025-03-11</EDDoorDate>
+            <EDDoorTime>14:30:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Aspirin</MedName>
+                    <OrderEntryDate>2025-03-10</OrderEntryDate>
+                    <OrderEntryTime>10:15:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>Patient arrived with chest pain.</NarrativeText>
+                    <NarrativeAuthor>Physician</NarrativeAuthor>
+                    <NarrativeType>ED Provider Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>
+	<Submission>
+        <PatientData>
+            <EdVisitId>5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5</EdVisitId>
+            <EdMrn>e2217d3e4e120c6a3372a1890f03e232b35ad659d71f7a62501a4ee204a3e66d</EdMrn>
+            <BirthDate>1985-06-15</BirthDate>
+            <Sex>M</Sex>
+            <EDDoorDate>2025-03-11</EDDoorDate>
+            <EDDoorTime>14:30:00</EDDoorTime>
+            <Medications>
+                <Medication>
+                    <MedName>Aspirin</MedName>
+                    <OrderEntryDate>2025-03-10</OrderEntryDate>
+                    <OrderEntryTime>10:15:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+            </Medications>
+            <Narratives>
+                <Narrative>
+                    <NarrativeText>Patient arrived with chest pain.</NarrativeText>
+                    <NarrativeAuthor>Physician</NarrativeAuthor>
+                    <NarrativeType>ED Provider Note</NarrativeType>
+                </Narrative>
+            </Narratives>
+        </PatientData>
+    </Submission>
+</Submissions>

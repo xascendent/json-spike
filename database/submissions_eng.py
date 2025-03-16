@@ -1,13 +1,14 @@
 from database.context_submission import SessionLocal
 from database.models.submission import Submissions
 from database.enums import SubmissionStatus
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def create_submission(file_name: str, file_path: str) -> int:    
     new_submission = Submissions(
         file_name=file_name,
         file_path=file_path,
-        upload_start_time=datetime.now(),
+        upload_start_time=datetime.now() - timedelta(hours=1),
+        upload_end_time=datetime.now(),
         processing_status_id=SubmissionStatus.UPLOAD_COMPLETE.value  
     )
     with SessionLocal() as session:
@@ -37,4 +38,13 @@ def submission_id_from_file_name(file_name: str) -> int:
         return submission.submission_id
     return -1 
 
-
+def file_name_from_submission_id(submissionid) -> str:
+    with SessionLocal() as session:
+        submission = session.query(Submissions).filter_by(submissionid=submissionid).first()
+        if not submission:
+            raise ValueError(f"Submission '{submissionid}' not found.")                
+        
+        return submission.file_name
+    
+    return "SUBMISSION NOT FOUND"
+    
