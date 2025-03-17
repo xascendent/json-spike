@@ -1,6 +1,7 @@
-from database.deid_eng import pull_random_subset, pull_narratives, visits_to_deid, narratives_to_deid, narratives_to_deid_return_list, add_llm_findings
-from database.med_eng import pull_stg_hashed_medication_list, get_grp_non_matched_hashed_medications
+from database.deid_eng import pull_random_subset, pull_narratives, visits_to_deid, narratives_to_deid_return_list, add_llm_findings
+from database.med_eng import pull_stg_hashed_medication_list, get_grp_non_matched_hashed_medications, save_medication
 from llms.llm_deid import detect_pii_phi
+from llms.llm_med import detect_medication
 from pipeline_utils.sleep_pipeline import sleep_llm_process
 
 
@@ -23,7 +24,7 @@ def run_deid_workflow(submission_id):
         #    i = 1
 
         result = detect_pii_phi(narrative_text)        
-        print(result)
+        #print(result)
         add_llm_findings(visit_id_lnk, narrative_hash, result)
         sleep_llm_process()     # prevent rate limits
 
@@ -37,11 +38,15 @@ def run_deid_workflow(submission_id):
     # result = detect_pii_phi(input_text)
     # print("\n=== Identified PII/PHI ===")
     # print(result)
-    print("De-identification workflow complete") 
+    #print("De-identification workflow complete") 
 
 def run_med_workflow(submission_id):
     staging_med_data = pull_stg_hashed_medication_list(submission_id)
     meds_to_be_grouped = get_grp_non_matched_hashed_medications(staging_med_data)
-    print(f"Non-matched medications:")
+    #print(f"Non-matched medications:")
     for hash_val, med_name in meds_to_be_grouped:
-        print(f"Hash: {hash_val}, Medication: {med_name}")
+        result = detect_medication(med_name)
+     #   print (result)
+     #   print(f"Hash: {hash_val}, Medication: {med_name}")
+        save_medication(hash_val, result)
+        sleep_llm_process()     # prevent rate limits

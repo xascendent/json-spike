@@ -15,6 +15,18 @@
                     <OrderEntryTime>10:15:00</OrderEntryTime>
                     <MedRoute>PO</MedRoute>
                 </Medication>
+                <Medication>
+                    <MedName>Amoxicillin</MedName>
+                    <OrderEntryDate>2024-03-12</OrderEntryDate>
+                    <OrderEntryTime>16:15:00</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
+                <Medication>
+                    <MedName>Amoxicillin with Saline</MedName>
+                    <OrderEntryDate>2020-12-24</OrderEntryDate>
+                    <OrderEntryTime>06:41:07</OrderEntryTime>
+                    <MedRoute>PO</MedRoute>
+                </Medication>
             </Medications>
             <Narratives>
                 <Narrative>

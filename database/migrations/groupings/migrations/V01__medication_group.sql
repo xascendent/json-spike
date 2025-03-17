@@ -8,5 +8,5 @@ CREATE TABLE medications_group (
     nsaid BIT DEFAULT(0),
     rxnorm_mappings NVARCHAR(MAX) NOT NULL,
     reviewed BIT DEFAULT(0),    
-    load_date DATETIMEOFFSET(7)   
+    load_date DATETIMEOFFSET(7) DEFAULT ((CONVERT([datetimeoffset],sysutcdatetime(),(126)) AT TIME ZONE 'Mountain Standard Time'))    
 );
