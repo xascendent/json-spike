@@ -16,17 +16,25 @@ def run_deid_workflow(submission_id):
     visits_to_deid(visit_data)    
     narrative_list = narratives_to_deid_return_list(narratives_data)
     
+    deid_failures = 0
     for narrative in narrative_list:
-        narrative_hash = narrative['hash_narrative_text']  #narrative.hash_narrative_text
-        narrative_text = narrative['narrative_text']
-        visit_id_lnk = narrative['visit_id_lnk']
-        #if(narrative['site_name'] == 'qbert'):  site testing
-        #    i = 1
+        try:
+            narrative_hash = narrative['hash_narrative_text']  #narrative.hash_narrative_text
+            narrative_text = narrative['narrative_text']
+            visit_id_lnk = narrative['visit_id_lnk']
+            #if(narrative['site_name'] == 'qbert'):  site testing
+            #    i = 1
 
-        result = detect_pii_phi(narrative_text)        
-        #print(result)
-        add_llm_findings(visit_id_lnk, narrative_hash, result)
-        sleep_llm_process()     # prevent rate limits
+            result = detect_pii_phi(narrative_text)        
+            #print(result)
+            add_llm_findings(visit_id_lnk, narrative_hash, result)
+            sleep_llm_process()     # prevent rate limits
+        except Exception as e:
+            print(f"Error processing narrative: {narrative_hash}")
+            deid_failures += 1
+            continue
+
+    push_metrics_deid(submission_id, deid_failures)
 
     # TESTING CASE
     # input_text = """
@@ -43,10 +51,38 @@ def run_deid_workflow(submission_id):
 def run_med_workflow(submission_id):
     staging_med_data = pull_stg_hashed_medication_list(submission_id)
     meds_to_be_grouped = get_grp_non_matched_hashed_medications(staging_med_data)
+    medication_failures = 0
+    meds_to_be_grouped_count = len(meds_to_be_grouped)
     #print(f"Non-matched medications:")
     for hash_val, med_name in meds_to_be_grouped:
-        result = detect_medication(med_name)
-     #   print (result)
-     #   print(f"Hash: {hash_val}, Medication: {med_name}")
-        save_medication(hash_val, result)
-        sleep_llm_process()     # prevent rate limits
+        try:
+            result = detect_medication(med_name)
+        #   print (result)
+        #   print(f"Hash: {hash_val}, Medication: {med_name}")
+            save_medication(hash_val, result)
+            sleep_llm_process()     # prevent rate limits
+        except Exception as e:
+            print(f"Error processing medication: {med_name}")
+            medication_failures += 1
+            continue
+    push_metrics_medication(submission_id, medication_failures)
+    push_metrics_medication_count(submission_id, meds_to_be_grouped_count)
+
+
+# PUSHGATEWAY    
+from metrics.pushgateway import MetricsReporter
+
+def push_metrics_deid(submission_id, deid_failures):
+    reporter = MetricsReporter()
+    # Report metrics during processing    
+    reporter.report_deid_llm_failure(submission_id, deid_failures)
+
+def push_metrics_medication(submission_id, medication_failures):
+    reporter = MetricsReporter()
+    # Report metrics during processing    
+    reporter.report_med_lookup_failure(submission_id, medication_failures)
+
+def push_metrics_medication_count(submission_id, meds_to_be_grouped_count):
+    reporter = MetricsReporter()
+    # Report metrics during processing    
+    reporter.report_med_lookup(submission_id, meds_to_be_grouped_count)

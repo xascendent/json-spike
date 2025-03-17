@@ -52,11 +52,12 @@ def process_submissions():
                     sleep_process()
                     run_workflow5(submission_id, xml_file)
                     sleep_process()
-                    
+                    report_processing_status(submission_id, success=True)
                     update_submission_status(submission_id, SubmissionStatus.PROCESSING_FILE_COMPLETE)
                 except Exception as e:
                     print(f"Error processing file: {xml_file}")
                     print(e)
+                    report_processing_status(submission_id, success=False)
                     fail_workflow(submission_id)
                     # move file to error folder
                     source_path = str(xml_file)
@@ -65,6 +66,14 @@ def process_submissions():
                     remove_failed_submission(submission_id)
                     continue
                 
+
+# PUSHGATEWAY    
+from metrics.pushgateway import MetricsReporter
+
+def report_processing_status(submission_id, success):
+    reporter = MetricsReporter()
+    # Report metrics during processing    
+    reporter.report_processing_status(submission_id, success)
 
 
 if __name__ == "__main__":

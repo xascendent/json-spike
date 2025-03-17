@@ -1,13 +1,16 @@
 from database.submissions_eng import submission_id_from_file_name, update_submission_status
+from database.staging_eng import get_submission_record_count 
 from database.enums import SubmissionStatus
 from pipeline_utils import xml_pipeline
+
 
 
 def run_workflow1(xml_file, submission_id, XSD_SCHEMA):
     # process file: check file against xsd and shred submission    
     result = False
     if file_xsd_check(xml_file, XSD_SCHEMA, submission_id):
-        result = xml_processing(xml_file, submission_id)                        
+        result = xml_processing(xml_file, submission_id)
+        push_metrics(submission_id)                        
     
     if result == False:        
         raise Exception("Error processing file: {xml_file}")
@@ -35,3 +38,16 @@ def file_xsd_check(xml_file, XSD_SCHEMA, submission_id)->bool:
     else:
         update_submission_status(submission_id, SubmissionStatus.VALIDATING_XSD_FAILED)
         return False
+    
+
+# PUSHGATEWAY    
+from metrics.pushgateway import MetricsReporter
+
+def push_metrics(submission_id):
+    reporter = MetricsReporter()        
+    
+    # Report metrics during processing
+    record_count = get_submission_record_count(submission_id)
+    reporter.report_records_processed(submission_id, record_count)
+    
+    

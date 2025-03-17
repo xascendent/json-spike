@@ -33,3 +33,17 @@ def remove_failed_submission(submission_id):
         # Commit once after all statements
         session.commit()
         print(f"Submission {submission_id} removed from staging!")
+
+
+def get_submission_record_count(submission_id):
+    query = text("""
+        SELECT COUNT(*) as record_count
+        FROM [dbo].[visits]
+        WHERE submission_id = :submission_id
+    """)
+
+    with SessionLocal() as session:
+        result = session.execute(query, {"submission_id": submission_id})
+        record_count = result.fetchone()[0]
+
+    return record_count

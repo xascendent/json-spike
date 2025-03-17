@@ -15,3 +15,17 @@ def check_visits_for_dups(submission_id):
         duplicates = result.fetchall()
         
     return duplicates
+
+def check_for_missing_narratives(submission_id):
+    query = text("""
+        SELECT COUNT(*) as missing_narratives
+        FROM dbo.narratives
+        WHERE submission_id = :submission_id
+        AND narrative_text IS NULL OR narrative_text = ''
+    """)
+    
+    with SessionLocal() as session:
+        result = session.execute(query, {"submission_id": submission_id})
+        missing_narratives = result.fetchone()[0]
+        
+    return missing_narratives
