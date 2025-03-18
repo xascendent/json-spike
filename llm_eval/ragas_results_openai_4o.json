@@ -1,0 +1,18 @@
+{
+  "model": "openai_4o",
+  "metrics": {
+    "classification_accuracy": 0.75
+  },
+  "error_cases": [
+    {
+      "medication": "Amoxicillin with Saline",
+      "expected": "opioid: no, antibiotic: no, nsaid: yes",
+      "model_answer": "opioid: no, antibiotic: yes, nsaid: no"
+    },
+    {
+      "medication": "Acetaminophen",
+      "expected": "opioid: no, antibiotic: no, nsaid: yes",
+      "model_answer": "opioid: no, antibiotic: no, nsaid: no"
+    }
+  ]
+}
